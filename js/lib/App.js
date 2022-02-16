@@ -43,28 +43,35 @@ export default class App {
         };
     }
 
+    #onResize() {
+        this.ctx.imageSmoothingEnabled = false;
+        this.canvas.width = this.size.width;
+        this.canvas.height = this.size.height;
+        this.canvas.style.width = `${this.size.width}px`;
+        this.canvas.style.height = `${this.size.height}px`;
+    }
+
     #addEventListeners() {
         window.addEventListener("resize", () => {
-            this.canvas.width = this.size.width;
-            this.canvas.height = this.size.height;
+            this.#onResize();
         });
     }
 
     #createCanvas() {
         this.canvas = document.createElement("canvas");
         this.ctx = this.canvas.getContext("2d");
-        this.ctx.imageSmoothingEnabled = false;
-
-        this.canvas.width = this.size.width;
-        this.canvas.height = this.size.height;
-
+        this.#onResize();
         document.body.appendChild(this.canvas);
     }
 
     #startCore() {
         const render = () => {
+            for(const object of this.components) {
+                object.update(this)
+            }
             for (const object of this.components.sort((a, b) => a.layer - b.layer)) {
-                object.core(this);
+                object.render(this)
+                object.renderBBox(this);
             }
 
             this.time += 1;

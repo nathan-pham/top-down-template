@@ -9,6 +9,7 @@ export default class Component {
     y = 0;
 
     action = "idle";
+    checkCollisions = false;
 
     constructor({ sprites = {}, animations = {} } = {}) {
         this.sprites = sprites;
@@ -25,14 +26,6 @@ export default class Component {
         return this.animations[this.action][time % this.animations[this.action].length];
     }
 
-    get bbox() {
-        return {
-            x: this.x,
-            y: this.y,
-            ...this.size,
-        };
-    }
-
     bbox(keyboard) {
         return keyboard
             ? {
@@ -40,33 +33,32 @@ export default class Component {
                   y: this.y + keyboard.worldY,
                   ...this.size,
               }
-            : this.bbox;
+            : {
+                  x: this.x,
+                  y: this.y,
+                  ...this.size,
+              };
     }
 
     collidable(app) {
         const keyboard = app.find((o) => o.name.includes("keyboard"));
         const player = app.find((o) => o.name.includes("player"));
 
-        const collisions = Physics.checkCollision(this.bbox(keyboard), player.bbox);
-
-        if (collisions) {
-            if (player.direction == "left") {
-                keyboard.worldX -= keyboard.worldSpeed;
-            } else if (player.direction == "right") {
-                keyboard.worldX += keyboard.worldSpeed;
-            } else if (player.direction == "forward") {
-                keyboard.worldY += keyboard.worldSpeed;
-            } else if (player.direction == "backward") {
-                keyboard.worldY -= keyboard.worldSpeed;
-            }
-        }
+        Physics.resolveCollision(this.bbox(keyboard), player.bbox(), keyboard);
     }
 
-    update(app) {}
+    update(app) {
+        if (this.checkCollisions) {
+            this.collidable(app);
+        }
+    }
     render(app) {}
 
-    core(app) {
-        this.update(app);
-        this.render(app);
+    renderBBox(app) {
+        if (this.checkCollisions || this.name == "player") {
+            const bbox = this.bbox(app.find("keyboard"));
+            app.ctx.strokeStyle = "red";
+            app.ctx.strokeRect(bbox.x, bbox.y, bbox.width, bbox.height);
+        }
     }
 }

@@ -1,10 +1,11 @@
 import Component from "/js/lib/Component.js";
 
 export default class Keyboard extends Component {
-    name = "physics:keyboard";
+    name = "keyboard";
     keys = [];
 
     worldSpeed = 5;
+    // restrict = [];
     worldX = 0;
     worldY = 0;
 
@@ -36,5 +37,7 @@ export default class Keyboard extends Component {
         if (this.keys.includes("ArrowRight")) {
             this.worldX -= this.worldSpeed;
         }
+
+        // this.restrict = "none"
     }
 }

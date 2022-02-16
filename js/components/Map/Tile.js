@@ -7,16 +7,39 @@ export default class Tile extends Component {
     x = 0;
     y = 0;
 
-    constructor({ sprites, type, x, y } = {}) {
+    constructor({ sprites, spriteType, tileType, checkCollisions, x = 0, y = 0 } = {}) {
         super({ sprites });
-        this.type = type
+
+        this.spriteType = spriteType;
+        this.tileType = tileType;
+        this.checkCollisions = checkCollisions;
+
         this.x = x;
         this.y = y;
     }
 
-    render(app) {
+    bbox(keyboard) {
+        if (this.spriteType == "fences") {
+            return {
+                x: this.x + keyboard.worldX + this.size.width / 4,
+                y: this.y + keyboard.worldY,
+                width: this.size.width / 2,
+                height: this.size.height,
+            };
+        }
+
+        return super.bbox(keyboard);
+    }
+
+    render(app, offsetX, offsetY) {
         const keyboard = app.find((o) => o.name.includes("keyboard"));
-        app.ctx.drawImage(this.sprites[this.type], this.x + keyboard.worldX, this.y + keyboard.worldY, this.size.width, this.size.height);
+        app.ctx.drawImage(this.sprites[this.spriteType][this.tileType], this.x + keyboard.worldX + offsetX, this.y + keyboard.worldY + offsetY, this.size.width, this.size.height);
+
+        // if (this.checkCollisions) {
+        //     const bbox = this.bbox(keyboard);
+        //     app.ctx.strokeStyle = "red";
+        //     app.ctx.strokeRect(bbox.x, bbox.y, bbox.width, bbox.height);
+        // }
     }
 }
 
