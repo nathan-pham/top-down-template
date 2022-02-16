@@ -4,7 +4,8 @@ import TextureLoader from "./lib/TextureLoader.js";
 import Background from "./components/Background.js";
 import Keyboard from "./components/Keyboard.js";
 import Player from "./components/Player.js";
-import Tile from "./components/Map/Tile.js";
+import TileMap from "./components/Map/TileMap.js";
+// import Tile from "./components/Map/Tile.js";
 
 const main = async () => {
     const loader = new TextureLoader().setBase("/SproutLands");
@@ -23,14 +24,18 @@ const main = async () => {
         rightIdle: loader.createAnimations(playerSprite, ["0,3", "1,3"], [14, 14]),
         rightWalk: loader.createAnimations(playerSprite, ["2,3", "3,3"], [14, 14]),
     }
+
+    const grassTileSprite = loader.loadSprite(await loader.loadImage("Tilesets/Grass.png"), 7, 7)
+
     const app = new App();
 
     // prettier-ignore
     app.add(
         new Keyboard(),
         new Background(), 
+        new TileMap({ sprites: grassTileSprite }),
         new Player({ sprites: playerSprite, animations: playerAnimations }), 
-        new Tile({ sprites: {} })
+        // new Tile({ sprites: {} })
     );
 };
 

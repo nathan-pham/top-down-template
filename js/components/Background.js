@@ -4,7 +4,7 @@ export default class Background extends Component {
     layer = -1
 
     render({ ctx, size: { width, height } }) {
-        ctx.fillStyle = "#fff";
+        ctx.fillStyle = "#c0d470";
         ctx.fillRect(0, 0, width, height);
     }
 }
