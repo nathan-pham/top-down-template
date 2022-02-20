@@ -40,7 +40,7 @@ const main = async () => {
         house: loader.loadSprite(await loader.loadImage("Tilesets/WoodenHouse.png"), 5, 5),
     };
 
-    const app = new App();
+    const app = new App({ renderBBox: false });
 
     const keyboard = new Keyboard();
 
@@ -52,13 +52,13 @@ const main = async () => {
             keyboard,
             sprites: tileSprites, 
             x: app.size.width / 2, 
-            y: 0 
+            y: app.size.height / 2
         }),
         new Cow({
             sprites: cowSprites,
             animations: cowAnimations,
-            x: 75,
-            y: 0,
+            x: 110,
+            y: 100,
         }),
         new Player({ 
             sprites: playerSprites, 

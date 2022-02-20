@@ -1,5 +1,6 @@
 export default class App {
-    constructor() {
+    constructor({ renderBBox=false }={}) {
+        this.renderBBox = renderBBox
         this.components = [];
         this.time = 0;
 
@@ -71,7 +72,10 @@ export default class App {
             }
             for (const object of this.components.sort((a, b) => a.layer - b.layer)) {
                 object.render(this)
-                object.renderBBox(this);
+
+                if(this.renderBBox) {
+                    object.renderBBox(this);
+                }
             }
 
             this.time += 1;

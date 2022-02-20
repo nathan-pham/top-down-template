@@ -16,13 +16,20 @@ export default class TileMap extends Component {
         // }
 
         this.tiles = [
-            // ["hills:1,0", "hills:2,0", "hills:3,0"],
-            // ["hills:1,1", "hills:2,1", "hills:3,1"],
+            ["fences:1,0", "fences:2,3", "fences:2,3", "fences:2,3", "fences:3,0"],
+            ["fences:0,1", "          ", "          ", "          ", "fences:0,1"],
+            ["fences:0,1", "          ", "          ", "          ", "fences:0,1"],
+            ["fences:0,1", "          ", "          ", "          ", "fences:0,1"],
+            ["fences:0,1", "          ", "          ", "          ", "fences:0,1"],
+            ["fences:1,2", "fences:2,3", "fences:2,3", "fences:2,3", "fences:3,2"],
+
+            // ["hills:1,0", "hills:2,3", "hills:3,0"],
+            // ["hills:0,1", "hills:2,1", "hills:0,1"],
             // ["hills:1,2", "hills:2,2", "hills:3,2"],
             // ["hills:1,3", "hills:2,3", "hills:3,3"],
-            ["fences:0,0", "dirt:0,2", "grass:0,0"],
-            ["          ", "dirt:0,3", "grass:0,0"],
-            ["fences:0,1", "dirt:0,4", ["fences:0,3", "grass:3,0"]],
+            // ["fences:0,0", "dirt:0,2", "grass:0,0"],
+            // ["          ", "dirt:0,3", "grass:0,0"],
+            // ["fences:0,1", "dirt:0,4", ["fences:0,3", "grass:3,0"]],
         ].map((row, y) => {
             return row.map((tiles, x) => {
                 const createTile = (tile) => {

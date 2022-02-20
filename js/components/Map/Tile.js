@@ -19,14 +19,16 @@ export default class Tile extends Component {
     }
 
     bbox(keyboard) {
-        if (this.spriteType == "fences") {
+        if (this.spriteType == "fences" && this.tileType == "0,1") {
+            // if(this.sprite)
+
             return {
                 x: this.x + keyboard.worldX + this.size.width / 4,
                 y: this.y + keyboard.worldY,
                 width: this.size.width / 2,
                 height: this.size.height,
             };
-        }
+        } 
 
         return super.bbox(keyboard);
     }
