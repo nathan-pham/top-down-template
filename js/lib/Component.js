@@ -44,12 +44,12 @@ export default class Component {
         const keyboard = app.find((o) => o.name.includes("keyboard"));
         const player = app.find((o) => o.name.includes("player"));
 
-        Physics.resolveCollision(this.bbox(keyboard), player.bbox(), keyboard);
+        return Physics.resolveCollision(this.bbox(keyboard), player.bbox(), keyboard);
     }
 
     update(app) {
         if (this.checkCollisions) {
-            this.collidable(app);
+            return this.collidable(app);
         }
     }
     render(app) {}
